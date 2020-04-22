@@ -2,64 +2,58 @@
 V0.2, Gataca
 
 ## Introduction
-GATACA is a blockchain-based digital identity platform that provides Identity and Access Management (IAM) services using decentralized identifiers and Verifiable Credentials.
+GATACA is a blockchain-based digital identity platform that provides Identity and Access Management (IAM) services using decentralized identifiers and verifiable credentials.
 
-The new architecture inverts the fundamentals of authentication management by putting the user at the center of identity issuance and control. The innovation lies in the capability of users to obtain identity credentials from different issuers worldwide -including governmental credentials- in a standard digital format that everyone recognizes and trusts and to store and manage these credentials through a digital ID wallet.
+The new architecture inverts the fundamentals of authentication management by putting the user at the center of identity issuance and control. With a digital wallet on their phones, users can obtain, store, and manage identity credentials from issuers worldwide - including governmental credentials - in a standard, recognized, and trusted digital format.
 
-Instead of hundreds of siloed and scattered identities, each servicing a specific purpose, users can now build a database of interoperable identity credentials that they can selectively share to authenticate securely in any digital service, both private and public, worldwide.
+Instead of hundreds of siloed and scattered identities, each servicing a specific purpose, users can now build a database of interoperable identity credentials that they can selectively share to securely authenticate any public or private digital service worldwide. 
 
-To achieve, Gataca uses the specifications provided by the W3C in [DID documents](https://www.w3.org/TR/did-core/) and [Verifiable Credentials documents](https://www.w3.org/TR/vc-data-model/). Looking for interoperability between the different agents globally.
+Gataca uses the specifications provided by the W3C in order to maximize interoperability between the different agents globally. [DID documents](https://www.w3.org/TR/did-core/) and [Verifiable Credentials documents](https://www.w3.org/TR/vc-data-model/). 
 
 ## Infrastructure
-Our platform is based on a mobile identity portfolio, a set of APIs and controllers for multiple blockchain networks.
+Gataca’s platform is based on a mobile identity portfolio, a set of APIs, and controllers for multiple blockchain networks. 
 
-In fact, one of the main characteristics that differentiate Gataca from the rest of the players is that Gataca is agnostic to the blockchain network used. For gataca, leveraging a blockchain network is a mistake, and that's why we abstract that layer so that every third party can use the one that suits them best.
-
-Actually, Gataca provides services to use Ethereum (Mainnet, Rinkeby, Robsten and private networks using Hyperledger Besu as a client), Hyperledger Fabric to private networks and Alastria.
-In the roadmap are Corda, Bitcoin, LacChain, ...
+Gataca is agnostic to the blockchain network used, a key differentiator relative to other providers. We adapt our infrastructure to the third party’s preferred ledger. Gataca currently provides services to use Ethereum (Mainnet, Rinkeby, Robsten, and private networks using Hyperledger Besu as a client), Hyperledger Fabric for private networks, and Alastria, Corda, Bitcoin, LacChain are in the current roadmap.
 
 ## Overview
-In this case, we provide Ethereum Smart Contract to read all DID documents we have in the DEV environment.
-Gataca provides also a Chaincode to read about information deployed in HLF private networks.
+In this application, we provide the Ethereum Smart Contract to read all DID documents we have in the DEV environment. Gataca also provides a Chaincode to read information deployed in HLF private networks.
 
-To the resolver, we provide just Ethereum Smart Contracts, Gataca uses both Ethereum networks and in Alastria (Quorum).
-Structure, is simple, it's just a mapping object which relates DIDs with states and public keys.
-To access the info users does not need privileges but to write into the blockchain, (actually) just Gataca can do it. We control just smart contract creator can modify it.
+The simple structure links an object to a DID with states and public keys. Users do not need privileges to read the information on the blockchain but do need them to write. Gataca is the unique user that can modify the smart contract.
 
 ## Specification
 ### Method DID Format
-Gataca method follows the next guide
+Gataca uses the following rules
 ```
 did                = "did:" method-name ":" method-specific-id
 method-name        = "gatc"
 method-specific-id = ^[a-km-zA-HJ-NP-Z1-9]{32}$
 ```
-It's composed by 3 parts:
-- **did**: Indicate it's a decentralized identifier
-- **method-name**: Gataca uses *gatc* as his method identifier
+Definitions:
+- **did**: Indicates it is a decentralized identifier
+- **method-name**: Gataca uses *gatc* as its method identifier
 - **identifier**: Identifier is a chain of 32 characters using base 58
 
 ### Operations
-Gataca provide 4 basic operations to manage DIDs. Using Gataca platform a user could create a new DID with its public key, could read the preious DID generated by himself or created by others users and, finally, users could modify to suspend temporary one of their DIDs or revoke permanently (logical deletion).
+Gataca provides four basic operations to manage DIDs. Using the backend platform a user can create a new DID with their public key, can read the previous DID generated by themselves or created by other users, and users can modify to temporarily suspend one of their DIDs or revoke it permanently (logical deletion).
 #### Create
-To create a new DID, users need to have access to Gataca Idenity (Identity wallet). Wallet generates a key pair associated to that DID, and it sends DID and public key to Gataca Backbone (middleware to communicate to DLTs). Private key would be stored in device secure storage.
+To create a new DID, users need to access the Gataca Identity app (Identity wallet). The wallet generates a key pair associated with that DID, and it sends the DID and public key to the Gataca Backbone (middleware to communicate to DLTs). The private key is stored in a mobile device’s secure storage.
 #### Read
-To read a DID, users need to consult to Gataca Backbone that DID. This access is free.
+Users need to use the Gataca Backbone with DID to read it. This access is free.
 #### Suspend
-To suspend a DID, users need to have privilege access to Gataca Backbone. Users could modify just their own DIDs. If the DID has been suspended, it cannot be read. To recover its value, user needs to re-activate it.
+To suspend a DID, users need to have privileged access to the Gataca Backbone. Users can only modify their own DIDs. If the DID has been suspended, it cannot be read. To recover it, the user needs to re-activate it.
 #### Revoke
-To revoke a DID, users need to have privilege access to Gataca Backbone. Users could modify just their own DIDs. If the DID has been revoked, it cannot be read, and since that moment, it cannot be read or modified.
+To revoke a DID, users need to have privileged access to Gataca Backbone. Users can only modify their own DIDs. If the DID has been revoked, it cannot be read or modified.
 
 ## Security Considerations
 ### Crypto algorithms
-Gataca platform is prepare to use some different crypto algorithms, but by default, it uses Ed25519 crypto algorithm. This feature provide Gataca the functionality to change the algorithm dynamically, adapting the platform to new features or breaks. Actually, Ed25519, is one of the more secure and faster algorithms for digital signatures. Futhermore, Gataca can adapt their algorithms to new client needs.
+Gataca platform is capable of using different crypto algorithms, but by default, it uses ED25519 as it is one of the fastest and most secure algorithms for digital signatures. This feature provides Gataca the functionality to change the algorithm dynamically, adapting the platform to new features or breaks. However, Gataca can adapt its algorithms according to client needs.
 ### AuthNFactors
-Gataca provides security mechanisms to ensure the device user is the same of the wallet owner. They use the same structure than  Verifiable Credentials, but Gataca distincts between them, because this kind of mechanisms just ensure the propietary, using challenges instead of store information about the user.
+Gataca uses security mechanisms to ensure the device and wallet owner are the same. AuthNFactors use the same structure as verifiable credentials, but its mechanisms ensure wallet and device ownership consistency by using challenges to verify authentication rather than storing information about the user.
 ### Consents - Anonymous relationship
-One of the main advantages using Gataca are consents. They are a data structure that provides evidences the user and the verifier consent the information sharing between them. With this kind of mechanisms user does not have to share his root DID, but he can use a new DID relationship to anonymize his data.
-
+Gataca’s consent approval is a distinct advantage. The consent structure provides evidence that the user and the verifier agree to share information between them. Importantly, the user uses a new DID relationship to anonymize his data, without sharing his root DID.
 ## Privacy Considerations
 ### DID-Relationship
-Gataca users have a root DID that it's his global identifier, but they have other multiple DIDs, one by relation between user and each verifier. This architecure provides anonymity to the user, protecting his root DID for hackers and inference processes. Also, that is a good mechanisms to revoke a relationship.
+Gataca users have a root DID that acts as their global identifier, but they have multiple DIDs related to each verifier relationship. This architecture provides anonymity to the user, protecting his root DID from hackers and inference processes. Additionally, this enables users to easily revoke access to their data.
+ 
 ### GDPR Compliance
-Gataca is GDPR compliance. Gataca stores in DLTs just *public* information. It uses DLTs to provide integrity and resilency, of the relation DID - Public Keys. That provides the platform a trusted third party, maintaining user privacy.
+Gataca is GDPR compliant. Gataca only stores public information in DLTs (DPKI). Gataca uses DLTs to provide integrity and resiliency and to act as a trusted third party, maintaining user privacy.
