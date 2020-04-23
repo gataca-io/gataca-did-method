@@ -23,8 +23,8 @@ did                = "did:" method-name ":" method-specific-id
 method-name        = "gatc"
 method-specific-id = ^[a-km-zA-HJ-NP-Z1-9]{32}$
 ```
-- **did**: Indicate it is a decentralized identifier
-- **method-name**: Gataca uses *gatc* as its method identifier
+- **did**: DID scheme type
+- **method-name**: Gataca uses *gatc* as its method name
 - **identifier**: 32 characters using base58
 
 Example of a Gataca DID - did:gatc:8fa938c8908242401r3b0fE5614fA2293
