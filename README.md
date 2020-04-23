@@ -39,7 +39,7 @@ CRUD operations may be triggered:
 These services call Gataca Backbone to fetch the information from the appropriate DLT network. 
 
 #### Create
-A Create operation creates a DID and its associated key pair. 
+A Create operation creates a DID and its associated key pair.
 #### Read
 A Read operation fetches the public key and status associated to a DID. Read operations are public.
 #### Update
